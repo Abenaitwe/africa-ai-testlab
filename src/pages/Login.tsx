@@ -82,7 +82,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
-      <div className="absolute inset-0 bg-background/90" />
       <div className="relative z-10">
         <Navigation />
         

@@ -65,10 +65,11 @@ const Leaderboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <div className="pt-24 pb-12">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+      <div className="relative z-10">
+        <Navigation />
+        
+        <div className="pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="mb-8 text-center">
             <h1 className="mb-2">Leaderboards</h1>
@@ -174,9 +175,10 @@ const Leaderboard = () => {
             </TabsContent>
           </Tabs>
         </div>
-      </div>
+        </div>
 
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -82,10 +82,11 @@ const Students = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <div className="pt-24 pb-12">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+      <div className="relative z-10">
+        <Navigation />
+        
+        <div className="pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="mb-8">
             <h1 className="mb-2">Student Community</h1>
@@ -157,9 +158,10 @@ const Students = () => {
             ))}
           </div>
         </div>
-      </div>
+        </div>
 
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 };
