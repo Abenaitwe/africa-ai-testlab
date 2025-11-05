@@ -201,11 +201,8 @@ const Index = () => {
         </section>
 
         {/* CTA Section */}
-        <section ref={ctaRef} className="py-20 bg-gradient-hero relative overflow-hidden">
-          {/* Groovy animated shapes */}
-          <div className="absolute top-10 left-10 w-32 h-32 border-4 border-white/20 rotate-45 animate-float-slow"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 rounded-full border-4 border-white/20 animate-float-slower"></div>
-          <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/10 rounded-full animate-pulse-slow"></div>
+        <section ref={ctaRef} className="py-20 bg-cover bg-center bg-no-repeat relative overflow-hidden" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+          <div className="absolute inset-0 bg-accent/50"></div>
           
           <div className="container mx-auto px-4 text-center relative z-10">
             <motion.h2 

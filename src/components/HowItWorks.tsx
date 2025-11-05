@@ -61,14 +61,6 @@ export const HowItWorks = () => {
 
   return (
     <section ref={ref} className="py-20 bg-gradient-to-br from-background via-primary/5 to-secondary/10 relative overflow-hidden">
-      {/* Retro 70's Background Decorations */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-primary/10 animate-float-slow"></div>
-        <div className="absolute bottom-20 right-20 w-40 h-40 rounded-full bg-secondary/10 animate-float-slower"></div>
-        <div className="absolute top-1/2 left-1/4 w-24 h-24 rotate-45 bg-accent/5"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-20 h-20 rotate-12 bg-primary/5 rounded-lg"></div>
-      </div>
-
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
@@ -130,13 +122,8 @@ export const HowItWorks = () => {
                   <span className="text-3xl font-black text-white">{index + 1}</span>
                 </motion.div>
 
-                {/* Icon with Retro Burst Background */}
+                {/* Icon */}
                 <div className="relative mb-6 flex justify-center">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-32 h-32 rounded-full bg-gradient-to-br opacity-20 animate-pulse-slow" style={{
-                      background: `conic-gradient(from 0deg, hsl(45 95% 55%), hsl(12 90% 60%), hsl(20 20% 10%), hsl(45 95% 55%))`
-                    }}></div>
-                  </div>
                   <motion.div
                     whileHover={{ scale: 1.15, rotate: 15 }}
                     transition={{ type: "spring", stiffness: 400 }}
@@ -151,51 +138,10 @@ export const HowItWorks = () => {
                 
                 {/* Description */}
                 <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-
-                {/* Decorative dots */}
-                <div className="mt-6 flex justify-center gap-2">
-                  {[...Array(3)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ scale: 0 }}
-                      animate={isInView ? { scale: 1 } : {}}
-                      transition={{ delay: 0.8 + i * 0.1 }}
-                      className={`w-2 h-2 rounded-full ${i === index ? 'bg-primary' : 'bg-accent/30'}`}
-                    ></motion.div>
-                  ))}
-                </div>
               </div>
             </motion.div>
           ))}
         </motion.div>
-
-        {/* Groovy Arrow Connectors (Desktop Only) */}
-        <div className="hidden md:flex justify-center items-center gap-8 mt-12 max-w-5xl mx-auto">
-          {[0, 1].map((i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1 + i * 0.2 }}
-              className="flex-1 h-2 bg-gradient-to-r from-primary via-secondary to-primary relative"
-              style={{ 
-                clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%)'
-              }}
-            >
-              <motion.div
-                animate={{
-                  x: ["0%", "100%"],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                className="h-full w-8 bg-white/50"
-              ></motion.div>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

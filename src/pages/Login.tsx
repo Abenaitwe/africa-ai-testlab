@@ -87,7 +87,7 @@ const Login = () => {
         
         <div className="pt-24 pb-12 container mx-auto px-4">
         <div className="max-w-md mx-auto">
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 bg-card/95 backdrop-blur-sm border-4 border-accent shadow-thick p-8">
             <h1 className="text-4xl font-bold mb-2">Join Rate That AI</h1>
             <p className="text-muted-foreground">Start testing and building with AI tools</p>
           </div>

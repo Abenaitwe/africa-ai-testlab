@@ -266,8 +266,15 @@ All colors MUST be HSL.
   white-space: nowrap;
   animation: 
     typing 3.5s steps(40, end) forwards,
-    blink-caret 0.75s step-end infinite,
-    blur-pulse 3.5s ease-in-out forwards;
+    blink-caret 0.75s step-end 5,
+    blur-pulse 3.5s ease-in-out forwards,
+    remove-cursor 0.1s 4s forwards;
+}
+
+@keyframes remove-cursor {
+  to {
+    border-right-color: transparent;
+  }
 }
 
 /* Retro Text Shadow Effect */

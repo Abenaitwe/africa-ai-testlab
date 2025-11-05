@@ -72,10 +72,12 @@ const Leaderboard = () => {
         <div className="pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="mb-8 text-center">
-            <h1 className="mb-2">Leaderboards</h1>
-            <p className="text-muted-foreground text-lg">
-              Top-performing tools and most active community members
-            </p>
+            <div className="inline-block bg-card/95 backdrop-blur-sm border-4 border-accent shadow-thick p-8">
+              <h1 className="mb-2">Leaderboards</h1>
+              <p className="text-muted-foreground text-lg">
+                Top-performing tools and most active community members
+              </p>
+            </div>
           </div>
 
           <Tabs defaultValue="tools" className="max-w-4xl mx-auto">

@@ -36,10 +36,12 @@ const Submit = () => {
         <div className="pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="mb-8 text-center">
-            <h1 className="mb-2">Submit Your Project</h1>
-            <p className="text-muted-foreground text-lg">
-              Share your AI-built application with the community
-            </p>
+            <div className="inline-block bg-card/95 backdrop-blur-sm border-4 border-accent shadow-thick p-8">
+              <h1 className="mb-2">Submit Your Project</h1>
+              <p className="text-muted-foreground text-lg">
+                Share your AI-built application with the community
+              </p>
+            </div>
           </div>
 
           <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
