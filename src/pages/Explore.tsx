@@ -5,90 +5,58 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Star, Search } from "lucide-react";
+import { Search, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { UpvoteButton } from "@/components/UpvoteButton";
 
 const Explore = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTool, setSelectedTool] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock projects data
-  const projects = [
-    {
-      id: "1",
-      title: "EduTrack Mobile",
-      description: "Student management app for rural schools with offline capabilities",
-      tool: "Lovable",
-      category: "Education",
-      rating: 4.5,
-      upvotes: 45,
-      views: 320,
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop",
-      author: "Jane Kamau",
-    },
-    {
-      id: "2",
-      title: "AgriConnect",
-      description: "Connecting farmers to markets with real-time pricing",
-      tool: "Mocha Orchids",
-      category: "Agriculture",
-      rating: 4.8,
-      upvotes: 72,
-      views: 510,
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop",
-      author: "David Ochieng",
-    },
-    {
-      id: "3",
-      title: "HealthHub",
-      description: "Telemedicine platform for remote areas",
-      tool: "Builder.ai",
-      category: "Healthcare",
-      rating: 4.3,
-      upvotes: 38,
-      views: 280,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
-      author: "Sarah Mwangi",
-    },
-    {
-      id: "4",
-      title: "BodaBoda Tracker",
-      description: "Safety and tracking app for motorcycle taxis",
-      tool: "Lovable",
-      category: "Transportation",
-      rating: 4.6,
-      upvotes: 54,
-      views: 412,
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=300&fit=crop",
-      author: "John Mutua",
-    },
-    {
-      id: "5",
-      title: "Waste Management Pro",
-      description: "Smart waste collection and recycling platform",
-      tool: "Mocha Orchids",
-      category: "Environment",
-      rating: 4.4,
-      upvotes: 41,
-      views: 295,
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop",
-      author: "Grace Wanjiru",
-    },
-    {
-      id: "6",
-      title: "LocalMarket Connect",
-      description: "E-commerce platform for local artisans",
-      tool: "Builder.ai",
-      category: "E-commerce",
-      rating: 4.7,
-      upvotes: 63,
-      views: 478,
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
-      author: "Michael Otieno",
-    },
-  ];
+  useEffect(() => {
+    loadProjects();
+  }, [selectedTool, selectedCategory, searchQuery]);
+
+  const loadProjects = async () => {
+    setLoading(true);
+    try {
+      let query = supabase
+        .from('projects')
+        .select(`
+          *,
+          profiles (username, full_name, avatar_url),
+          project_images (image_url, display_order)
+        `)
+        .order('created_at', { ascending: false });
+
+      if (selectedTool !== 'all') {
+        query = query.eq('ai_tool', selectedTool);
+      }
+
+      if (selectedCategory !== 'all') {
+        query = query.eq('category', selectedCategory);
+      }
+
+      if (searchQuery) {
+        query = query.or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+
+      setProjects(data || []);
+    } catch (error) {
+      console.error('Error loading projects:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
@@ -154,50 +122,77 @@ const Explore = () => {
               </div>
 
               <div className="flex items-end">
-                <Button variant="secondary" className="w-full h-12">Apply Filters</Button>
+                <Button variant="secondary" className="w-full h-12" onClick={loadProjects}>
+                  Apply Filters
+                </Button>
               </div>
             </div>
           </Card>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <Link key={project.id} to={`/project/${project.id}`}>
-                <Card className="hover:shadow-thick-hover transition-all duration-300 hover:-translate-y-2 cursor-pointer h-full border-4 border-accent shadow-thick overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover border-b-4 border-accent"
-                  />
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-xl font-bold flex-1">{project.title}</h3>
-                      <Badge variant="secondary" className="ml-2 shrink-0">{project.tool}</Badge>
-                    </div>
-                    <p className="text-muted-foreground mb-3 line-clamp-2">{project.description}</p>
-                    <Badge variant="outline" className="mb-4">{project.category}</Badge>
-                    
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-primary fill-primary" />
-                          <span className="font-semibold">{project.rating}</span>
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-xl text-muted-foreground">Loading projects...</p>
+            </div>
+          ) : projects.length === 0 ? (
+            <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
+              <CardContent className="p-12 text-center">
+                <p className="text-xl text-muted-foreground mb-4">No projects found</p>
+                <Link to="/submit">
+                  <Button>Submit the first project!</Button>
+                </Link>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((project) => {
+                const firstImage = project.project_images?.find((img: any) => img.display_order === 0) 
+                  || project.project_images?.[0];
+                
+                return (
+                  <Link key={project.id} to={`/project/${project.id}`}>
+                    <Card className="hover:shadow-thick-hover transition-all duration-300 hover:-translate-y-2 cursor-pointer h-full border-4 border-accent shadow-thick overflow-hidden">
+                      {firstImage && (
+                        <img
+                          src={firstImage.image_url}
+                          alt={project.title}
+                          className="w-full h-48 object-cover border-b-4 border-accent"
+                        />
+                      )}
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <h3 className="text-xl font-bold flex-1">{project.title}</h3>
+                          <Badge variant="secondary" className="ml-2 shrink-0 capitalize">
+                            {project.ai_tool}
+                          </Badge>
                         </div>
-                        <span className="text-muted-foreground">
-                          ▲ {project.upvotes}
-                        </span>
-                      </div>
-                      <span className="text-muted-foreground">{project.views} views</span>
-                    </div>
-                    
-                    <div className="mt-3 pt-3 border-t border-border">
-                      <p className="text-sm text-muted-foreground">by {project.author}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                        <p className="text-muted-foreground mb-3 line-clamp-2">{project.description}</p>
+                        <Badge variant="outline" className="mb-4 capitalize">{project.category}</Badge>
+                        
+                        <div className="flex items-center justify-between text-sm mb-3">
+                          <UpvoteButton 
+                            projectId={project.id} 
+                            initialUpvotes={project.upvotes || 0}
+                            size="sm"
+                          />
+                          <div className="flex items-center gap-1 text-muted-foreground">
+                            <Eye className="w-4 h-4" />
+                            <span>{project.views || 0}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="pt-3 border-t border-border">
+                          <p className="text-sm text-muted-foreground">
+                            by {project.profiles?.full_name || project.profiles?.username}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
 
           <div className="mt-12 text-center">
             <Button variant="outline" size="lg">

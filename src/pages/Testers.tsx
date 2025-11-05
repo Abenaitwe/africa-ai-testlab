@@ -8,7 +8,7 @@ import { Search, MapPin, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const Students = () => {
+const Testers = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   // Mock students data
@@ -89,9 +89,9 @@ const Students = () => {
         <div className="pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="mb-8 inline-block bg-card/95 backdrop-blur-sm border-4 border-accent shadow-thick p-8">
-            <h1 className="mb-2">Student Community</h1>
+            <h1 className="mb-2">Tester Community</h1>
             <p className="text-muted-foreground text-lg">
-              Meet the testers and builders pushing AI tools to their limits
+              Meet the testers pushing AI tools to their limits
             </p>
           </div>
 
@@ -166,4 +166,4 @@ const Students = () => {
   );
 };
 
-export default Students;
+export default Testers;
