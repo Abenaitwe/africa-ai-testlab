@@ -51,11 +51,20 @@ const Index = () => {
     },
   ];
 
-  // Mock AI tool partners
+  // AI tool partners
   const partners = [
-    { name: "Lovable", logo: "https://lovable.dev/logo.png" },
-    { name: "Mocha Orchids", logo: "" },
-    { name: "Builder.ai", logo: "" },
+    { name: "Base44" },
+    { name: "Blink" },
+    { name: "Bolt.new" },
+    { name: "Cursor" },
+    { name: "HeyBoss" },
+    { name: "Lovable" },
+    { name: "Mocha" },
+    { name: "Orchids" },
+    { name: "Rork" },
+    { name: "v0" },
+    { name: "Windsurf" },
+    { name: "Wix" },
   ];
 
   return (
@@ -89,7 +98,7 @@ const Index = () => {
             >
               Leading AI tools trusted by African innovators
             </motion.p>
-            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+            <div className="flex flex-wrap justify-center items-center gap-6 max-w-5xl mx-auto">
               {partners.map((partner, index) => (
                 <motion.div 
                   key={partner.name}
@@ -97,19 +106,19 @@ const Index = () => {
                   animate={partnersInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
                   transition={{ 
                     duration: 0.5,
-                    delay: 0.3 + index * 0.1,
+                    delay: 0.3 + (index * 0.05),
                     type: "spring",
                     stiffness: 200
                   }}
                   whileHover={{ 
                     scale: 1.1,
-                    rotate: index % 2 === 0 ? 5 : -5,
+                    rotate: index % 2 === 0 ? 3 : -3,
                     transition: { duration: 0.2 }
                   }}
                   className="text-center"
                 >
-                  <div className="w-32 h-16 bg-white rounded-lg flex items-center justify-center shadow-sm border-2 border-accent hover:shadow-thick transition-all duration-300">
-                    <span className="font-semibold text-foreground">{partner.name}</span>
+                  <div className="px-4 py-3 bg-white rounded-lg flex items-center justify-center shadow-sm border-2 border-accent hover:shadow-thick transition-all duration-300">
+                    <span className="font-semibold text-foreground text-sm">{partner.name}</span>
                   </div>
                 </motion.div>
               ))}

@@ -230,11 +230,18 @@ const Submit = () => {
                         <SelectValue placeholder="Select tool" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="lovable">Lovable</SelectItem>
-                        <SelectItem value="mocha">Mocha Orchids</SelectItem>
-                        <SelectItem value="builder">Builder.ai</SelectItem>
-                        <SelectItem value="v0">v0.dev</SelectItem>
+                        <SelectItem value="base44">Base44</SelectItem>
+                        <SelectItem value="blink">Blink</SelectItem>
+                        <SelectItem value="bolt">Bolt.new</SelectItem>
                         <SelectItem value="cursor">Cursor</SelectItem>
+                        <SelectItem value="heyboss">HeyBoss</SelectItem>
+                        <SelectItem value="lovable">Lovable</SelectItem>
+                        <SelectItem value="mocha">Mocha</SelectItem>
+                        <SelectItem value="orchids">Orchids</SelectItem>
+                        <SelectItem value="rork">Rork</SelectItem>
+                        <SelectItem value="v0">v0</SelectItem>
+                        <SelectItem value="windsurf">Windsurf</SelectItem>
+                        <SelectItem value="wix">Wix</SelectItem>
                         <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>

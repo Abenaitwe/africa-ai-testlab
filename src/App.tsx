@@ -11,6 +11,7 @@ import Leaderboard from "./pages/Leaderboard";
 import Submit from "./pages/Submit";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/submit" element={<Submit />} />
           <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

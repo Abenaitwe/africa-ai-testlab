@@ -1,27 +1,38 @@
 -- Create storage bucket for project images
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('project-images', 'project-images', true)
-ON CONFLICT (id) DO NOTHING;
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'project-images', 
+  'project-images', 
+  true,
+  10485760, -- 10MB limit
+  ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+)
+ON CONFLICT (id) DO UPDATE SET
+  public = true,
+  file_size_limit = 10485760,
+  allowed_mime_types = ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Anyone can view project images" ON storage.objects;
+DROP POLICY IF EXISTS "Authenticated users can upload project images" ON storage.objects;
+DROP POLICY IF EXISTS "Users can update own project images" ON storage.objects;
+DROP POLICY IF EXISTS "Users can delete own project images" ON storage.objects;
 
 -- Set up storage policies for project images
 CREATE POLICY "Anyone can view project images"
 ON storage.objects FOR SELECT
+TO public
 USING (bucket_id = 'project-images');
 
 CREATE POLICY "Authenticated users can upload project images"
 ON storage.objects FOR INSERT
-WITH CHECK (
-  bucket_id = 'project-images' AND
-  auth.role() = 'authenticated'
-);
-
-CREATE POLICY "Users can update own project images"
-ON storage.objects FOR UPDATE
-USING (bucket_id = 'project-images' AND auth.uid()::text = (storage.foldername(name))[1]);
+TO authenticated
+WITH CHECK (bucket_id = 'project-images');
 
 CREATE POLICY "Users can delete own project images"
 ON storage.objects FOR DELETE
-USING (bucket_id = 'project-images' AND auth.uid()::text = (storage.foldername(name))[1]);
+TO authenticated
+USING (bucket_id = 'project-images');
 
 -- Update user_type check constraint to use 'tester' instead of 'student'
 ALTER TABLE public.profiles DROP CONSTRAINT IF EXISTS profiles_user_type_check;
