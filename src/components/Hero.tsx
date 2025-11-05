@@ -12,9 +12,7 @@ export const Hero = () => {
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
             <span className="typing-animation inline-block">AI Meets Chaos.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-3xl mx-auto">
-            From Mbarara to Kampala, students push AI tools to their limits — low-end phones, 2G networks, and real-world use.
-          </p>
+          <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-3xl mx-auto">Pushing AI tools to their limits: creative tasks and real world use.</p>
           <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto">
             If your AI survives here, it's ready for anywhere.
           </p>
