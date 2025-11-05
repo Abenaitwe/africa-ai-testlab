@@ -201,26 +201,28 @@ const Profile = () => {
                 ) : (
                   <div className="grid md:grid-cols-2 gap-6">
                     {projects.map((project) => (
-                      <Card key={project.id} className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm hover:shadow-thick-hover transition-all">
-                        <CardContent className="p-6">
-                          <div className="flex items-start justify-between mb-3">
-                            <h3 className="text-xl font-bold flex-1">{project.title}</h3>
-                            <Badge variant="secondary" className="ml-2">{project.ai_tool}</Badge>
-                          </div>
-                          <p className="text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="flex items-center gap-1">
-                                <Award className="w-4 h-4 text-primary" />
-                                <span className="font-semibold">▲ {project.upvotes || 0}</span>
-                              </div>
-                              <span className="text-muted-foreground text-sm">
-                                {new Date(project.created_at).toLocaleDateString()}
-                              </span>
+                      <Link key={project.id} to={`/project/${project.id}`}>
+                        <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm hover:shadow-thick-hover transition-all cursor-pointer">
+                          <CardContent className="p-6">
+                            <div className="flex items-start justify-between mb-3">
+                              <h3 className="text-xl font-bold flex-1">{project.title}</h3>
+                              <Badge variant="secondary" className="ml-2 capitalize">{project.ai_tool}</Badge>
                             </div>
-                          </div>
-                        </CardContent>
-                      </Card>
+                            <p className="text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1">
+                                  <Award className="w-4 h-4 text-primary" />
+                                  <span className="font-semibold">▲ {project.upvotes || 0}</span>
+                                </div>
+                                <span className="text-muted-foreground text-sm">
+                                  {new Date(project.created_at).toLocaleDateString()}
+                                </span>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </Link>
                     ))}
                   </div>
                 )}
