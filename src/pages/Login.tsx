@@ -81,10 +81,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <div className="pt-24 pb-12 container mx-auto px-4">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+      <div className="absolute inset-0 bg-background/90" />
+      <div className="relative z-10">
+        <Navigation />
+        
+        <div className="pt-24 pb-12 container mx-auto px-4">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold mb-2">Join Rate That AI</h1>
@@ -98,12 +100,12 @@ const Login = () => {
             </TabsList>
 
             <TabsContent value="login">
-              <Card>
-                <CardHeader>
+              <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
+                <CardHeader className="p-8">
                   <CardTitle>Welcome Back</CardTitle>
                   <CardDescription>Enter your credentials to continue</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-8 pt-0">
                   <form onSubmit={handleLogin} className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="login-email">Email</Label>
@@ -143,12 +145,12 @@ const Login = () => {
                 </TabsList>
 
                 <TabsContent value="student">
-                  <Card>
-                    <CardHeader>
+                  <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
+                    <CardHeader className="p-8">
                       <CardTitle>Student Sign Up</CardTitle>
                       <CardDescription>Join our testing community</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="p-8 pt-0">
                       <form onSubmit={(e) => handleSignup(e, "student")} className="space-y-4">
                         <div className="space-y-2">
                           <Label htmlFor="student-email">Email</Label>
@@ -181,12 +183,12 @@ const Login = () => {
                 </TabsContent>
 
                 <TabsContent value="builder">
-                  <Card>
-                    <CardHeader>
+                  <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
+                    <CardHeader className="p-8">
                       <CardTitle>AI Builder Sign Up</CardTitle>
                       <CardDescription>Submit your AI tool for testing</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="p-8 pt-0">
                       <form onSubmit={(e) => handleSignup(e, "builder")} className="space-y-4">
                         <div className="space-y-2">
                           <Label htmlFor="builder-email">Email</Label>
@@ -224,6 +226,7 @@ const Login = () => {
           <p className="text-center text-sm text-muted-foreground mt-4">
             By continuing, you agree to our Terms of Service and Privacy Policy
           </p>
+        </div>
         </div>
       </div>
     </div>

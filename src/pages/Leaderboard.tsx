@@ -84,18 +84,18 @@ const Leaderboard = () => {
             </TabsList>
 
             <TabsContent value="tools">
-              <Card>
-                <CardHeader>
+              <Card className="border-4 border-accent shadow-thick">
+                <CardHeader className="p-8">
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="w-6 h-6 text-primary" />
                     Top AI Builder Tools
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 p-8 pt-0">
                   {topTools.map((tool, index) => (
                     <div
                       key={tool.name}
-                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                      className="flex items-center gap-4 p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1"
                     >
                       <div className={`text-4xl font-bold ${getTrophyColor(index)}`}>
                         #{index + 1}
@@ -128,18 +128,18 @@ const Leaderboard = () => {
             </TabsContent>
 
             <TabsContent value="testers">
-              <Card>
-                <CardHeader>
+              <Card className="border-4 border-accent shadow-thick">
+                <CardHeader className="p-8">
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="w-6 h-6 text-primary" />
                     Top Testers & Builders
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 p-8 pt-0">
                   {topTesters.map((tester, index) => (
                     <div
                       key={tester.username}
-                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+                      className="flex items-center gap-4 p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1 cursor-pointer"
                     >
                       <div className={`text-4xl font-bold ${getTrophyColor(index)}`}>
                         #{index + 1}

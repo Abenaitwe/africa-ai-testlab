@@ -29,10 +29,12 @@ const Submit = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <div className="pt-24 pb-12">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+      <div className="absolute inset-0 bg-background/90" />
+      <div className="relative z-10">
+        <Navigation />
+        
+        <div className="pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="mb-8 text-center">
             <h1 className="mb-2">Submit Your Project</h1>
@@ -41,14 +43,14 @@ const Submit = () => {
             </p>
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Project Details</CardTitle>
+          <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
+            <CardHeader className="p-8">
+              <CardTitle className="text-3xl">Project Details</CardTitle>
               <CardDescription>
                 Fill in the details about your AI-built application
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-8 pt-0">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="title">Project Title *</Label>
@@ -166,8 +168,8 @@ const Submit = () => {
             </CardContent>
           </Card>
 
-          <div className="mt-8 p-4 bg-muted rounded-lg">
-            <h3 className="font-semibold mb-2">Submission Guidelines</h3>
+          <div className="mt-8 p-6 bg-card/95 backdrop-blur-sm rounded-lg border-4 border-accent shadow-thick">
+            <h3 className="font-semibold text-xl mb-4">Submission Guidelines</h3>
             <ul className="space-y-1 text-sm text-muted-foreground">
               <li>• Ensure your project is functional and accessible</li>
               <li>• Provide clear screenshots showing key features</li>
@@ -178,7 +180,8 @@ const Submit = () => {
         </div>
       </div>
 
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 };

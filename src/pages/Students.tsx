@@ -111,8 +111,8 @@ const Students = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {students.map((student) => (
               <Link key={student.id} to={`/profile/${student.username}`}>
-                <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full border-2">
-                  <CardContent className="p-6">
+                <Card className="hover:shadow-thick-hover transition-all duration-300 hover:-translate-y-2 cursor-pointer h-full border-4 border-accent shadow-thick">
+                  <CardContent className="p-8">
                     <div className="flex items-start gap-4 mb-4">
                       <Avatar className="w-16 h-16">
                         <AvatarImage src={student.avatar} alt={student.name} />

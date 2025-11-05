@@ -153,3 +153,18 @@ All colors MUST be HSL.
     font-family: 'Bebas Neue', cursive;
   }
 }
+
+@keyframes blur-pulse {
+  0%, 100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+  50% {
+    filter: blur(4px);
+    opacity: 0.8;
+  }
+}
+
+.animate-blur-pulse {
+  animation: blur-pulse 3s ease-in-out infinite;
+}
