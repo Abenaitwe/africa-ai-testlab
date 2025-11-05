@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Sparkles, Users, Zap } from "lucide-react";
-
 export const Hero = () => {
-  return (
-    <div className="relative overflow-hidden py-20 md:py-32 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+  return <div className="relative overflow-hidden py-20 md:py-32 bg-cover bg-center bg-no-repeat" style={{
+    backgroundImage: 'url(/retro-waves-bg.jpg)'
+  }}>
       <div className="absolute inset-0 bg-accent/40" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            <span className="typing-animation inline-block">Where Your AI Meets Africa's Chaos.</span>
+            <span className="typing-animation inline-block">AI Meets Chaos.</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-3xl mx-auto">
             From Mbarara to Kampala, students push AI tools to their limits — low-end phones, 2G networks, and real-world use.
@@ -26,10 +26,7 @@ export const Hero = () => {
               </Button>
             </Link>
             <Link to="/login">
-              <Button 
-                size="lg" 
-                className="text-lg px-8 bg-white/20 hover:bg-white/30 text-white border-2 border-white backdrop-blur-sm"
-              >
+              <Button size="lg" className="text-lg px-8 bg-white/20 hover:bg-white/30 text-white border-2 border-white backdrop-blur-sm">
                 Join the Squad
               </Button>
             </Link>
@@ -59,6 +56,5 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
