@@ -4,8 +4,8 @@ import { Sparkles, Users, Zap } from "lucide-react";
 
 export const Hero = () => {
   return (
-    <div className="relative overflow-hidden bg-gradient-hero py-20 md:py-32">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent)]" />
+    <div className="relative overflow-hidden py-20 md:py-32 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+      <div className="absolute inset-0 bg-accent/40" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
