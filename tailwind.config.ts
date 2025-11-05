@@ -13,6 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Bebas Neue', 'cursive'],
+        heading: ['Playfair Display', 'serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -62,6 +67,15 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        'thick': 'var(--shadow-thick)',
+        'thick-hover': 'var(--shadow-thick-hover)',
+        'soft': 'var(--shadow-soft)',
+      },
+      borderWidth: {
+        '3': '3px',
+        '4': '4px',
       },
       keyframes: {
         "accordion-down": {
@@ -117,6 +131,7 @@ export default {
       backgroundImage: {
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-card': 'var(--gradient-card)',
+        'gradient-retro': 'var(--gradient-retro)',
       },
     },
   },
