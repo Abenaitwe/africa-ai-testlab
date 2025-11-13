@@ -7,8 +7,19 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { useRef } from "react";
+import { useInView } from "framer-motion";
 
 const Index = () => {
+  const partnersRef = useRef(null);
+  const projectsRef = useRef(null);
+  const ctaRef = useRef(null);
+  
+  const partnersInView = useInView(partnersRef, { once: true, amount: 0.3 });
+  const projectsInView = useInView(projectsRef, { once: true, amount: 0.2 });
+  const ctaInView = useInView(ctaRef, { once: true, amount: 0.5 });
+
   // Mock featured projects
   const featuredProjects = [
     {
@@ -40,11 +51,20 @@ const Index = () => {
     },
   ];
 
-  // Mock AI tool partners
+  // AI tool partners
   const partners = [
-    { name: "Lovable", logo: "https://lovable.dev/logo.png" },
-    { name: "Mocha Orchids", logo: "" },
-    { name: "Builder.ai", logo: "" },
+    { name: "Base44" },
+    { name: "Blink" },
+    { name: "Bolt.new" },
+    { name: "Cursor" },
+    { name: "HeyBoss" },
+    { name: "Lovable" },
+    { name: "Mocha" },
+    { name: "Orchids" },
+    { name: "Rork" },
+    { name: "v0" },
+    { name: "Windsurf" },
+    { name: "Wix" },
   ];
 
   return (
@@ -56,96 +76,190 @@ const Index = () => {
         <HowItWorks />
 
         {/* Partners Section */}
-        <section className="py-16 bg-muted/50">
-          <div className="container mx-auto px-4">
-            <h2 className="text-center mb-4">Our AI Builder Partners</h2>
-            <p className="text-center text-muted-foreground mb-8">
+        <section ref={partnersRef} className="py-16 bg-muted/50 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              animate={partnersInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-4"
+            >
+              Our AI Builder Partners
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={partnersInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-center text-muted-foreground mb-8"
+            >
               Leading AI tools trusted by African innovators
-            </p>
-            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-              {partners.map((partner) => (
-                <div key={partner.name} className="text-center">
-                  <div className="w-32 h-16 bg-white rounded-lg flex items-center justify-center shadow-sm border border-border">
-                    <span className="font-semibold text-foreground">{partner.name}</span>
+            </motion.p>
+            <div className="flex flex-wrap justify-center items-center gap-6 max-w-5xl mx-auto">
+              {partners.map((partner, index) => (
+                <motion.div 
+                  key={partner.name}
+                  initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+                  animate={partnersInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+                  transition={{ 
+                    duration: 0.5,
+                    delay: 0.3 + (index * 0.05),
+                    type: "spring",
+                    stiffness: 200
+                  }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    rotate: index % 2 === 0 ? 3 : -3,
+                    transition: { duration: 0.2 }
+                  }}
+                  className="text-center"
+                >
+                  <div className="px-4 py-3 bg-white rounded-lg flex items-center justify-center shadow-sm border-2 border-accent hover:shadow-thick transition-all duration-300">
+                    <span className="font-semibold text-foreground text-sm">{partner.name}</span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
         {/* Featured Projects */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
+        <section ref={projectsRef} className="py-20 bg-background relative overflow-hidden">
+          {/* Retro background elements */}
+          <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-accent/5 rounded-full blur-2xl"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="flex justify-between items-center mb-8">
-              <div>
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={projectsInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6 }}
+              >
                 <h2 className="mb-2">Featured Projects</h2>
                 <p className="text-muted-foreground">
                   Top-rated applications built by our community
                 </p>
-              </div>
-              <Link to="/explore">
-                <Button variant="outline">
-                  View All
-                  <ArrowUpRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={projectsInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6 }}
+              >
+                <Link to="/explore">
+                  <Button variant="outline" className="border-2 border-accent hover:shadow-thick transition-all">
+                    View All
+                    <ArrowUpRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </motion.div>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {featuredProjects.map((project) => (
-                <Link key={project.id} to={`/project/${project.id}`}>
-                  <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border-2">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-48 object-cover rounded-t-lg"
-                    />
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-xl font-bold">{project.title}</h3>
-                        <Badge variant="secondary" className="ml-2">{project.tool}</Badge>
+              {featuredProjects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                  animate={projectsInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                  transition={{ 
+                    duration: 0.5,
+                    delay: 0.2 + index * 0.15,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  whileHover={{ 
+                    y: -10,
+                    rotate: index % 2 === 0 ? 1 : -1,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <Link to={`/project/${project.id}`}>
+                    <Card className="hover:shadow-thick transition-all duration-300 cursor-pointer border-4 border-accent overflow-hidden group">
+                      <div className="overflow-hidden">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
                       </div>
-                      <p className="text-muted-foreground mb-4">{project.description}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-primary fill-primary" />
-                          <span className="font-semibold">{project.rating}</span>
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <h3 className="text-xl font-bold">{project.title}</h3>
+                          <Badge variant="secondary" className="ml-2 border-2 border-accent">{project.tool}</Badge>
                         </div>
-                        <div className="text-sm text-muted-foreground">
-                          ▲ {project.upvotes} upvotes
+                        <p className="text-muted-foreground mb-4">{project.description}</p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4 text-primary fill-primary" />
+                            <span className="font-semibold">{project.rating}</span>
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            ▲ {project.upvotes} upvotes
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-hero">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-white mb-4">Ready to Test Your AI?</h2>
-            <p className="text-white/90 text-xl mb-8 max-w-2xl mx-auto">
+        <section ref={ctaRef} className="py-20 bg-cover bg-center bg-no-repeat relative overflow-hidden" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+          <div className="absolute inset-0 bg-accent/50"></div>
+          
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <motion.h2 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={ctaInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.6, type: "spring", stiffness: 150 }}
+              className="text-white mb-4 retro-text-shadow"
+            >
+              Ready to Test Your AI?
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={ctaInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-white/90 text-xl mb-8 max-w-2xl mx-auto"
+            >
               Join hundreds of students testing, building, and learning with AI tools
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            </motion.p>
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={ctaInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
               <Link to="/submit">
-                <Button variant="secondary" size="lg" className="text-lg px-8">
-                  Submit Your Tool
-                </Button>
+                <motion.div
+                  whileHover={{ scale: 1.05, rotate: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button variant="secondary" size="lg" className="text-lg px-8 border-4 border-accent shadow-thick hover:shadow-thick-hover transition-all">
+                    Submit Your Tool
+                  </Button>
+                </motion.div>
               </Link>
               <Link to="/login">
-                <Button 
-                  size="lg" 
-                  className="text-lg px-8 bg-white/20 hover:bg-white/30 text-white border-2 border-white"
+                <motion.div
+                  whileHover={{ scale: 1.05, rotate: 2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  Start Testing
-                </Button>
+                  <Button 
+                    size="lg" 
+                    className="text-lg px-8 bg-white/20 hover:bg-white/30 text-white border-4 border-white backdrop-blur-sm shadow-thick hover:shadow-thick-hover transition-all"
+                  >
+                    Start Testing
+                  </Button>
+                </motion.div>
               </Link>
-            </div>
+            </motion.div>
           </div>
         </section>
 

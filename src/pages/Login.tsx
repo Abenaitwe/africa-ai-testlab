@@ -45,7 +45,7 @@ const Login = () => {
     }
   };
 
-  const handleSignup = async (e: React.FormEvent, userType: string) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -58,7 +58,7 @@ const Login = () => {
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            user_type: userType,
+            user_type: 'tester',
           },
         },
       });
@@ -82,13 +82,12 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
-      <div className="absolute inset-0 bg-background/90" />
       <div className="relative z-10">
         <Navigation />
         
         <div className="pt-24 pb-12 container mx-auto px-4">
         <div className="max-w-md mx-auto">
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 bg-card/95 backdrop-blur-sm border-4 border-accent shadow-thick p-8">
             <h1 className="text-4xl font-bold mb-2">Join Rate That AI</h1>
             <p className="text-muted-foreground">Start testing and building with AI tools</p>
           </div>
@@ -138,88 +137,41 @@ const Login = () => {
             </TabsContent>
 
             <TabsContent value="signup">
-              <Tabs defaultValue="student" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-4">
-                  <TabsTrigger value="student">I'm a Student</TabsTrigger>
-                  <TabsTrigger value="builder">I'm a Builder</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="student">
-                  <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
-                    <CardHeader className="p-8">
-                      <CardTitle>Student Sign Up</CardTitle>
-                      <CardDescription>Join our testing community</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-8 pt-0">
-                      <form onSubmit={(e) => handleSignup(e, "student")} className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="student-email">Email</Label>
-                          <Input
-                            id="student-email"
-                            type="email"
-                            placeholder="your@email.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="student-password">Password</Label>
-                          <Input
-                            id="student-password"
-                            type="password"
-                            placeholder="••••••••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                          />
-                        </div>
-                        <Button type="submit" className="w-full" disabled={loading}>
-                          {loading ? "Creating account..." : "Sign Up as Student"}
-                        </Button>
-                      </form>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="builder">
-                  <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
-                    <CardHeader className="p-8">
-                      <CardTitle>AI Builder Sign Up</CardTitle>
-                      <CardDescription>Submit your AI tool for testing</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-8 pt-0">
-                      <form onSubmit={(e) => handleSignup(e, "builder")} className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="builder-email">Email</Label>
-                          <Input
-                            id="builder-email"
-                            type="email"
-                            placeholder="your@email.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="builder-password">Password</Label>
-                          <Input
-                            id="builder-password"
-                            type="password"
-                            placeholder="••••••••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                          />
-                        </div>
-                        <Button type="submit" className="w-full" disabled={loading}>
-                          {loading ? "Creating account..." : "Sign Up as Builder"}
-                        </Button>
-                      </form>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
+              <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
+                <CardHeader className="p-8">
+                  <CardTitle>Tester Sign Up</CardTitle>
+                  <CardDescription>Join our testing community</CardDescription>
+                </CardHeader>
+                <CardContent className="p-8 pt-0">
+                  <form onSubmit={handleSignup} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="signup-email">Email</Label>
+                      <Input
+                        id="signup-email"
+                        type="email"
+                        placeholder="your@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="signup-password">Password</Label>
+                      <Input
+                        id="signup-password"
+                        type="password"
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <Button type="submit" className="w-full" disabled={loading}>
+                      {loading ? "Creating account..." : "Sign Up as Tester"}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
             </TabsContent>
           </Tabs>
 

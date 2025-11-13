@@ -4,58 +4,87 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Trophy, Star, TrendingUp } from "lucide-react";
+import { Trophy, Award } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Link } from "react-router-dom";
 
 const Leaderboard = () => {
-  // Mock leaderboard data
-  const topTools = [
-    { name: "Lovable", rating: 4.7, projects: 45, reviews: 234, trend: "+12%" },
-    { name: "Mocha Orchids", rating: 4.5, projects: 38, reviews: 189, trend: "+8%" },
-    { name: "Builder.ai", rating: 4.3, projects: 31, reviews: 156, trend: "+5%" },
-  ];
+  const [topTools, setTopTools] = useState<any[]>([]);
+  const [topTesters, setTopTesters] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const topTesters = [
-    {
-      name: "Michael Otieno",
-      username: "mikeot",
-      reviews: 52,
-      projects: 9,
-      rating: 4.8,
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
-    },
-    {
-      name: "David Ochieng",
-      username: "davidoch",
-      reviews: 45,
-      projects: 8,
-      rating: 4.7,
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=David",
-    },
-    {
-      name: "Grace Wanjiru",
-      username: "gracew",
-      reviews: 38,
-      projects: 7,
-      rating: 4.6,
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Grace",
-    },
-    {
-      name: "Sarah Mwangi",
-      username: "sarahmw",
-      reviews: 31,
-      projects: 6,
-      rating: 4.5,
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
-    },
-    {
-      name: "Jane Kamau",
-      username: "janekamau",
-      reviews: 23,
-      projects: 5,
-      rating: 4.4,
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
-    },
-  ];
+  useEffect(() => {
+    loadLeaderboards();
+  }, []);
+
+  const loadLeaderboards = async () => {
+    setLoading(true);
+    try {
+      // Load top AI tools (ranked by total upvotes and project count)
+      const { data: toolsData } = await supabase
+        .from('projects')
+        .select('ai_tool, upvotes')
+        .order('upvotes', { ascending: false });
+
+      if (toolsData) {
+        // Aggregate by AI tool
+        const toolStats: any = {};
+        toolsData.forEach((project) => {
+          if (!toolStats[project.ai_tool]) {
+            toolStats[project.ai_tool] = {
+              name: project.ai_tool,
+              projects: 0,
+              totalUpvotes: 0,
+            };
+          }
+          toolStats[project.ai_tool].projects += 1;
+          toolStats[project.ai_tool].totalUpvotes += project.upvotes || 0;
+        });
+
+        // Convert to array and calculate average upvotes, then sort
+        const toolsArray = Object.values(toolStats).map((tool: any) => ({
+          ...tool,
+          avgUpvotes: tool.totalUpvotes / tool.projects,
+        })).sort((a: any, b: any) => b.totalUpvotes - a.totalUpvotes);
+
+        setTopTools(toolsArray.slice(0, 10));
+      }
+
+      // Load top testers (ranked by number of projects + reviews)
+      const { data: testersData } = await supabase
+        .from('profiles')
+        .select(`
+          *,
+          projects (count),
+          reviews (count)
+        `)
+        .eq('user_type', 'tester')
+        .limit(20);
+
+      if (testersData) {
+        // Calculate score and sort
+        const testersWithScore = testersData.map((tester: any) => {
+          const projectsCount = tester.projects?.[0]?.count || 0;
+          const reviewsCount = tester.reviews?.[0]?.count || 0;
+          // Score: projects worth 3 points, reviews worth 1 point
+          const score = (projectsCount * 3) + reviewsCount;
+          return {
+            ...tester,
+            projectsCount,
+            reviewsCount,
+            score,
+          };
+        }).sort((a, b) => b.score - a.score);
+
+        setTopTesters(testersWithScore.slice(0, 10));
+      }
+    } catch (error) {
+      console.error('Error loading leaderboards:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getTrophyColor = (index: number) => {
     if (index === 0) return "text-primary";
@@ -65,16 +94,19 @@ const Leaderboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <div className="pt-24 pb-12">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+      <div className="relative z-10">
+        <Navigation />
+        
+        <div className="pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="mb-8 text-center">
-            <h1 className="mb-2">Leaderboards</h1>
-            <p className="text-muted-foreground text-lg">
-              Top-performing tools and most active community members
-            </p>
+            <div className="inline-block bg-card/95 backdrop-blur-sm border-4 border-accent shadow-thick p-8">
+              <h1 className="mb-2">Leaderboards</h1>
+              <p className="text-muted-foreground text-lg">
+                Top-performing tools and most active community members
+              </p>
+            </div>
           </div>
 
           <Tabs defaultValue="tools" className="max-w-4xl mx-auto">
@@ -84,7 +116,7 @@ const Leaderboard = () => {
             </TabsList>
 
             <TabsContent value="tools">
-              <Card className="border-4 border-accent shadow-thick">
+              <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
                 <CardHeader className="p-8">
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="w-6 h-6 text-primary" />
@@ -92,91 +124,111 @@ const Leaderboard = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 p-8 pt-0">
-                  {topTools.map((tool, index) => (
-                    <div
-                      key={tool.name}
-                      className="flex items-center gap-4 p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1"
-                    >
-                      <div className={`text-4xl font-bold ${getTrophyColor(index)}`}>
-                        #{index + 1}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-lg">{tool.name}</h3>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 text-primary fill-primary" />
-                            <span className="font-semibold">{tool.rating}</span>
+                  {loading ? (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">Loading rankings...</p>
+                    </div>
+                  ) : topTools.length === 0 ? (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No tools ranked yet. Submit a project to get started!</p>
+                    </div>
+                  ) : (
+                    topTools.map((tool, index) => (
+                      <div
+                        key={tool.name}
+                        className="flex items-center gap-4 p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1"
+                      >
+                        <div className={`text-4xl font-bold ${getTrophyColor(index)}`}>
+                          #{index + 1}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-bold text-lg capitalize">{tool.name}</h3>
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
+                            <div className="flex items-center gap-1">
+                              <Award className="w-4 h-4 text-primary" />
+                              <span className="font-semibold">{tool.totalUpvotes}</span>
+                              <span>upvotes</span>
+                            </div>
+                            <span>{tool.projects} projects</span>
+                            <span>{Math.round(tool.avgUpvotes)} avg upvotes/project</span>
                           </div>
-                          <span>{tool.projects} projects</span>
-                          <span>{tool.reviews} reviews</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-1 text-accent font-semibold">
-                        <TrendingUp className="w-4 h-4" />
-                        {tool.trend}
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </CardContent>
               </Card>
 
               <div className="mt-8 text-center">
                 <p className="text-muted-foreground">
-                  Rankings based on average ratings and community feedback
+                  Rankings based on total upvotes and number of projects
                 </p>
               </div>
             </TabsContent>
 
             <TabsContent value="testers">
-              <Card className="border-4 border-accent shadow-thick">
+              <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
                 <CardHeader className="p-8">
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="w-6 h-6 text-primary" />
-                    Top Testers & Builders
+                    Top Testers
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 p-8 pt-0">
-                  {topTesters.map((tester, index) => (
-                    <div
-                      key={tester.username}
-                      className="flex items-center gap-4 p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1 cursor-pointer"
-                    >
-                      <div className={`text-4xl font-bold ${getTrophyColor(index)}`}>
-                        #{index + 1}
-                      </div>
-                      <Avatar className="w-12 h-12">
-                        <AvatarImage src={tester.avatar} alt={tester.name} />
-                        <AvatarFallback>{tester.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <h3 className="font-bold">{tester.name}</h3>
-                        <p className="text-sm text-muted-foreground">@{tester.username}</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="flex items-center gap-1 justify-end mb-1">
-                          <Star className="w-4 h-4 text-primary fill-primary" />
-                          <span className="font-semibold">{tester.rating}</span>
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {tester.reviews} reviews · {tester.projects} projects
-                        </div>
-                      </div>
+                  {loading ? (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">Loading rankings...</p>
                     </div>
-                  ))}
+                  ) : topTesters.length === 0 ? (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No testers ranked yet. Join and start contributing!</p>
+                    </div>
+                  ) : (
+                    topTesters.map((tester, index) => (
+                      <Link key={tester.username} to={`/profile/${tester.username}`}>
+                        <div className="flex items-center gap-4 p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1 cursor-pointer">
+                          <div className={`text-4xl font-bold ${getTrophyColor(index)}`}>
+                            #{index + 1}
+                          </div>
+                          <Avatar className="w-12 h-12 border-2 border-accent">
+                            <AvatarImage src={tester.avatar_url} alt={tester.full_name} />
+                            <AvatarFallback>
+                              {tester.full_name?.split(' ').map((n: string) => n[0]).join('') || tester.username.substring(0, 2).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1">
+                            <h3 className="font-bold">{tester.full_name || tester.username}</h3>
+                            <p className="text-sm text-muted-foreground">@{tester.username}</p>
+                          </div>
+                          <div className="text-right">
+                            <div className="flex items-center gap-1 justify-end mb-1">
+                              <Award className="w-5 h-5 text-primary" />
+                              <span className="font-bold text-lg">{tester.score}</span>
+                              <span className="text-sm text-muted-foreground">pts</span>
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              {tester.reviewsCount} reviews · {tester.projectsCount} projects
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    ))
+                  )}
                 </CardContent>
               </Card>
 
               <div className="mt-8 text-center">
                 <p className="text-muted-foreground">
-                  Rankings based on number of reviews, projects, and community contribution
+                  Rankings based on activity: 3 points per project, 1 point per review
                 </p>
               </div>
             </TabsContent>
           </Tabs>
         </div>
-      </div>
+        </div>
 
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 };

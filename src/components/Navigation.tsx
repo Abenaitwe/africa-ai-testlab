@@ -1,10 +1,60 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, User, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        loadProfile(session.user.id);
+      }
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        loadProfile(session.user.id);
+      } else {
+        setProfile(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const loadProfile = async (userId: string) => {
+    const { data } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+    setProfile(data);
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
 
   return (
     <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
@@ -18,8 +68,8 @@ export const Navigation = () => {
           <Link to="/explore" className="text-foreground hover:text-primary transition-colors">
             Explore
           </Link>
-          <Link to="/students" className="text-foreground hover:text-primary transition-colors">
-            Students
+          <Link to="/testers" className="text-foreground hover:text-primary transition-colors">
+            Testers
           </Link>
           <Link to="/leaderboard" className="text-foreground hover:text-primary transition-colors">
             Leaderboard
@@ -27,9 +77,41 @@ export const Navigation = () => {
           <Link to="/submit">
             <Button variant="hero" size="sm">Submit Project</Button>
           </Link>
-          <Link to="/login">
-            <Button variant="outline" size="sm">Login</Button>
-          </Link>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-2 outline-none">
+                <Avatar className="h-8 w-8 border-2 border-accent">
+                  <AvatarImage src={profile?.avatar_url} alt={profile?.username} />
+                  <AvatarFallback>{profile?.username?.substring(0, 2).toUpperCase() || 'U'}</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <div className="flex items-center gap-2 p-2">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={profile?.avatar_url} alt={profile?.username} />
+                    <AvatarFallback>{profile?.username?.substring(0, 2).toUpperCase() || 'U'}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <p className="text-sm font-medium">{profile?.full_name || profile?.username}</p>
+                    <p className="text-xs text-muted-foreground">@{profile?.username}</p>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate(`/profile/${profile?.username}`)}>
+                  <User className="mr-2 h-4 w-4" />
+                  My Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link to="/login">
+              <Button variant="outline" size="sm">Login</Button>
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -53,11 +135,11 @@ export const Navigation = () => {
               Explore
             </Link>
             <Link 
-              to="/students" 
+              to="/testers" 
               className="text-foreground hover:text-primary transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Students
+              Testers
             </Link>
             <Link 
               to="/leaderboard" 
@@ -69,9 +151,24 @@ export const Navigation = () => {
             <Link to="/submit" onClick={() => setMobileMenuOpen(false)}>
               <Button variant="hero" size="sm" className="w-full">Submit Project</Button>
             </Link>
-            <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-              <Button variant="outline" size="sm" className="w-full">Login</Button>
-            </Link>
+            {user ? (
+              <>
+                <Link to={`/profile/${profile?.username}`} onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="outline" size="sm" className="w-full">
+                    <User className="mr-2 h-4 w-4" />
+                    My Profile
+                  </Button>
+                </Link>
+                <Button variant="outline" size="sm" className="w-full" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" size="sm" className="w-full">Login</Button>
+              </Link>
+            )}
           </div>
         </div>
       )}
