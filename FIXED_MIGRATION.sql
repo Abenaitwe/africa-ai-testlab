@@ -83,6 +83,11 @@ ON public.projects
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+CREATE POLICY "Anyone can view projects"
+ON public.projects
+FOR SELECT
+USING (true);
+
 -- Success message
 DO $$ 
 BEGIN 
