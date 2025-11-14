@@ -33,7 +33,7 @@ const Login = () => {
         description: "You've successfully logged in.",
       });
       
-      navigate("/explore");
+      navigate("/submit");
     } catch (error: any) {
       toast({
         title: "Error",
@@ -50,7 +50,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const redirectUrl = `${window.location.origin}/`;
+      const redirectUrl = `${window.location.origin}/submit`;
       
       const { error } = await supabase.auth.signUp({
         email,
