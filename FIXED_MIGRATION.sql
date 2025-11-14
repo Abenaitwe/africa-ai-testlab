@@ -84,6 +84,8 @@ ON public.projects
 FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Anyone can view projects" ON public.projects;
+
 CREATE POLICY "Anyone can view projects"
 ON public.projects
 FOR SELECT
