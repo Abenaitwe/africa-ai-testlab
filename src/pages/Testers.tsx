@@ -55,7 +55,7 @@ const TestersHero = () => (
           transition={{ duration: 0.8, delay: 0.7 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Link to="/register">
+          <Link to="/login">
             <Button size="lg" className="neumo-cta-primary text-lg px-8">
               Join The Squad →
             </Button>
@@ -131,7 +131,7 @@ const HowItWorksTesters = () => {
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
                 >
-                    <Link to="/register">
+                    <Link to="/login">
                       <Button size="lg" className="neumo-cta-primary text-lg px-8">
                         Start Testing Today →
                       </Button>
@@ -301,7 +301,7 @@ const TestersCTA = () => (
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <Link to="/register">
+          <Link to="/login">
             <Button size="lg" className="neumo-cta-primary text-lg px-8">
               Join The Squad - Start Earning →
             </Button>
