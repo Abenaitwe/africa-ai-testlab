@@ -53,6 +53,7 @@ WITH CHECK (auth.uid() = id);
 DROP POLICY IF EXISTS "Anyone can view project images" ON storage.objects;
 DROP POLICY IF EXISTS "Authenticated users can upload project images" ON storage.objects;
 DROP POLICY IF EXISTS "Users can delete own project images" ON storage.objects;
+DROP POLICY IF EXISTS "Authenticated users can update project images" ON storage.objects;
 
 -- Create storage policies
 CREATE POLICY "Anyone can view project images"
