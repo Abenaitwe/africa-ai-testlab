@@ -1,45 +1,55 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Sparkles, Users, Zap } from "lucide-react";
+import { Bug, Globe, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const Hero = () => {
   const stats = [
     { icon: Users, value: "200+", label: "Active Testers" },
-    { icon: Zap, value: "1,000+", label: "Bugs Squashed" },
-    { icon: Sparkles, value: "24/7", label: "Student Network" },
+    { icon: Bug, value: "1,247+", label: "Bugs Obliterated" },
+    { icon: Globe, value: "24/7", label: "Testing Network" },
   ];
 
   return (
     <div className="relative overflow-hidden py-20 md:py-32">
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-primary font-semibold tracking-widest uppercase mb-4"
+          >
+            🌍 AFRICA'S 24/7 HUMAN STRESS TEST FOR AI
+          </motion.p>
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
           >
-            AI Meets <span className="text-primary">Chaos.</span>
+            Your AI Works in Silicon Valley. Can It Survive <span className="text-primary">Kampala?</span>
           </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto"
           >
-            Pushing AI tools to their limits: creative tasks and real world use.
+            200+ engineering students across Uganda stress-test your AI on 2G networks, low-end phones, slang, and unpredictable workflows. They don't follow scripts—they experiment, improvise, and find the chaos your lab misses. If your AI survives here, it survives anywhere.
           </motion.p>
-          
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
+            className="mb-8 text-sm"
           >
-            If your AI survives here, it's ready for anywhere.
-          </motion.p>
+            <div className="inline-block bg-secondary text-secondary-foreground rounded-full px-4 py-2">
+             ⚡ Next batch: 9 spots left | 🔴 Currently testing: 4 tools live
+            </div>
+          </motion.div>
           
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -49,24 +59,15 @@ export const Hero = () => {
           >
             <Link to="/submit">
               <Button size="lg" className="neumo-cta-primary text-lg px-8">
-                Submit Your AI
+                Submit Your AI →
               </Button>
             </Link>
-            <Link to="/login">
+            <a href="#how-it-works">
               <Button size="lg" className="neumo-cta-secondary text-lg px-8">
-                Join the Squad
+                See How It Works ↓
               </Button>
-            </Link>
+            </a>
           </motion.div>
-
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-muted-foreground text-lg mb-8 italic border-l-4 border-primary pl-4 max-w-3xl mx-auto"
-          >
-            "We test, we break, we learn. Rate That AI is Africa's open lab — where builders meet testers and projects evolve under real pressure."
-          </motion.p>
 
           {/* Stats Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
