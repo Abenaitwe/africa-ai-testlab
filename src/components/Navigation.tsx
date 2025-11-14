@@ -4,7 +4,6 @@ import { Menu, X, User as UserIcon, LogOut } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -23,7 +22,7 @@ interface Profile {
 
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const navigate = useNavigate();
 
