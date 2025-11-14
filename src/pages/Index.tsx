@@ -84,7 +84,7 @@ const Index = () => {
               transition={{ duration: 0.6 }}
               className="text-center mb-4"
             >
-              Our AI Builder Partners
+              <span className="heading-gradient">Our AI Builder Partners</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0 }}
@@ -126,7 +126,7 @@ const Index = () => {
                 animate={projectsInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6 }}
               >
-                <h2 className="mb-2">Featured Projects</h2>
+                <h2 className="mb-2 heading-gradient">Featured Projects</h2>
                 <p className="text-muted-foreground">
                   Top-rated applications built by our community
                 </p>
@@ -200,7 +200,7 @@ const Index = () => {
               transition={{ duration: 0.6, type: "spring", stiffness: 150 }}
               className="mb-4"
             >
-              Ready to Test Your AI?
+              <span className="heading-gradient">Ready to Test Your AI?</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}

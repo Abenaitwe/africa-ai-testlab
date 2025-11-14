@@ -20,7 +20,7 @@ export const Hero = () => {
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
           >
-            AI Meets Chaos.
+            <span className="heading-gradient">AI Meets Chaos.</span>
           </motion.h1>
           
           <motion.p 

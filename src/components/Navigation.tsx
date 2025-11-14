@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, User, LogOut } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -59,8 +60,8 @@ export const Navigation = () => {
   return (
     <nav className="fixed top-0 w-full bg-canvas z-50 shadow-neumo-elevated">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-foreground">
-          Rate<span className="text-primary">That</span><span className="text-accent">AI</span>
+        <Link to="/">
+          <img src={logo} alt="RateThatAI Logo" className="h-8" />
         </Link>
 
         {/* Desktop Navigation */}

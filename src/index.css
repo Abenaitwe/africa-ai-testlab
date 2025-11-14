@@ -85,6 +85,10 @@
   h1 { @apply text-5xl md:text-6xl; }
   h2 { @apply text-4xl; }
   h3 { @apply text-2xl; }
+
+  .heading-gradient {
+    @apply bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent;
+  }
 }
 
 @layer components {
@@ -105,6 +109,7 @@
 
   .neumo-cta-secondary {
     @apply rounded-lg text-secondary-foreground font-bold bg-gradient-to-br from-secondary via-gray-800 to-black;
+    color: hsl(var(--secondary-foreground));
     box-shadow: 4px 4px 8px hsl(var(--shadow-dark-hsl)), -4px -4px 8px hsl(var(--shadow-light-hsl));
   }
   .neumo-cta-secondary:active {

@@ -207,7 +207,7 @@ const ProjectDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed flex items-center justify-center" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center bg-card/95 backdrop-blur-sm p-8 rounded-lg border-4 border-accent shadow-thick">
           <p className="text-xl">Loading project...</p>
         </div>
@@ -217,7 +217,7 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed flex items-center justify-center" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center bg-card/95 backdrop-blur-sm p-8 rounded-lg border-4 border-accent shadow-thick">
           <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
           <p className="mb-6">This project doesn't exist.</p>
@@ -234,7 +234,7 @@ const ProjectDetail = () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
+    <div className="min-h-screen bg-background">
       <div className="relative z-10">
         <Navigation />
         
