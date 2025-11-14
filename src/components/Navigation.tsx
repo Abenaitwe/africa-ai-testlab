@@ -57,7 +57,7 @@ export const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
+    <nav className="fixed top-0 w-full bg-canvas z-50 shadow-neumo-elevated">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold text-foreground">
           Rate<span className="text-primary">That</span><span className="text-accent">AI</span>
@@ -75,7 +75,7 @@ export const Navigation = () => {
             Leaderboard
           </Link>
           <Link to="/submit">
-            <Button variant="hero" size="sm">Submit Project</Button>
+            <Button className="neumo-cta-secondary" size="sm">Submit Project</Button>
           </Link>
           {user ? (
             <DropdownMenu>
@@ -85,7 +85,7 @@ export const Navigation = () => {
                   <AvatarFallback>{profile?.username?.substring(0, 2).toUpperCase() || 'U'}</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="end" className="w-56 neumo-elevated">
                 <div className="flex items-center gap-2 p-2">
                   <Avatar className="h-10 w-10">
                     <AvatarImage src={profile?.avatar_url} alt={profile?.username} />
@@ -109,7 +109,7 @@ export const Navigation = () => {
             </DropdownMenu>
           ) : (
             <Link to="/login">
-              <Button variant="outline" size="sm">Login</Button>
+              <Button className="neumo-cta-secondary" size="sm">Login</Button>
             </Link>
           )}
         </div>
@@ -125,7 +125,7 @@ export const Navigation = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background">
+        <div className="md:hidden border-t border-border bg-canvas">
           <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
             <Link 
               to="/explore" 
@@ -149,24 +149,24 @@ export const Navigation = () => {
               Leaderboard
             </Link>
             <Link to="/submit" onClick={() => setMobileMenuOpen(false)}>
-              <Button variant="hero" size="sm" className="w-full">Submit Project</Button>
+              <Button className="neumo-cta-secondary w-full" size="sm">Submit Project</Button>
             </Link>
             {user ? (
               <>
                 <Link to={`/profile/${profile?.username}`} onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="outline" size="sm" className="w-full">
+                  <Button className="neumo-cta-secondary w-full" size="sm">
                     <User className="mr-2 h-4 w-4" />
                     My Profile
                   </Button>
                 </Link>
-                <Button variant="outline" size="sm" className="w-full" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
+                <Button className="neumo-cta-secondary w-full" size="sm" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Logout
                 </Button>
               </>
             ) : (
               <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" size="sm" className="w-full">Login</Button>
+                <Button className="neumo-cta-secondary w-full" size="sm">Login</Button>
               </Link>
             )}
           </div>

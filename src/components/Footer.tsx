@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <footer className="bg-muted py-12 border-t border-border">
+    <footer className="bg-canvas py-12">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
@@ -15,7 +15,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Platform</h4>
+            <h4 className="font-semibold mb-4 text-foreground">Platform</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/explore" className="text-muted-foreground hover:text-primary transition-colors">
@@ -36,7 +36,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4 text-foreground">Company</h4>
             <ul className="space-y-2">
               <li>
                 <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">
@@ -57,7 +57,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
+            <h4 className="font-semibold mb-4 text-foreground">Legal</h4>
             <ul className="space-y-2">
               <li>
                 <a href="#privacy" className="text-muted-foreground hover:text-primary transition-colors">

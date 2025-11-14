@@ -24,6 +24,7 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        canvas: "hsl(var(--canvas))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -64,14 +65,14 @@ export default {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "1.5rem",
+        md: "1rem",
+        sm: "0.5rem",
       },
       boxShadow: {
-        'thick': 'var(--shadow-thick)',
-        'thick-hover': 'var(--shadow-thick-hover)',
-        'soft': 'var(--shadow-soft)',
+        'neumo-elevated': '8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light)',
+        'neumo-inset': 'inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light)',
+        'neumo-cta-primary': '4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light)',
       },
       borderWidth: {
         '3': '3px',

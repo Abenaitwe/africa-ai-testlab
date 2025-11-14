@@ -71,17 +71,13 @@ const Index = () => {
     <div className="min-h-screen">
       <Navigation />
       
-      <div className="pt-16">
+      <div>
         <Hero />
         <HowItWorks />
 
         {/* Partners Section */}
-        <section ref={partnersRef} className="py-16 bg-muted/50 relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl"></div>
-          
-          <div className="container mx-auto px-4 relative z-10">
+        <section ref={partnersRef} className="py-16">
+          <div className="container mx-auto px-4">
             <motion.h2 
               initial={{ opacity: 0, y: 30 }}
               animate={partnersInView ? { opacity: 1, y: 0 } : {}}
@@ -102,22 +98,17 @@ const Index = () => {
               {partners.map((partner, index) => (
                 <motion.div 
                   key={partner.name}
-                  initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-                  animate={partnersInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={partnersInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ 
                     duration: 0.5,
                     delay: 0.3 + (index * 0.05),
                     type: "spring",
                     stiffness: 200
                   }}
-                  whileHover={{ 
-                    scale: 1.1,
-                    rotate: index % 2 === 0 ? 3 : -3,
-                    transition: { duration: 0.2 }
-                  }}
                   className="text-center"
                 >
-                  <div className="px-4 py-3 bg-white rounded-lg flex items-center justify-center shadow-sm border-2 border-accent hover:shadow-thick transition-all duration-300">
+                  <div className="px-4 py-3 neumo-elevated flex items-center justify-center">
                     <span className="font-semibold text-foreground text-sm">{partner.name}</span>
                   </div>
                 </motion.div>
@@ -127,12 +118,8 @@ const Index = () => {
         </section>
 
         {/* Featured Projects */}
-        <section ref={projectsRef} className="py-20 bg-background relative overflow-hidden">
-          {/* Retro background elements */}
-          <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
-          <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-accent/5 rounded-full blur-2xl"></div>
-          
-          <div className="container mx-auto px-4 relative z-10">
+        <section ref={projectsRef} className="py-20">
+          <div className="container mx-auto px-4">
             <div className="flex justify-between items-center mb-8">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -150,7 +137,7 @@ const Index = () => {
                 transition={{ duration: 0.6 }}
               >
                 <Link to="/explore">
-                  <Button variant="outline" className="border-2 border-accent hover:shadow-thick transition-all">
+                  <Button className="neumo-cta-secondary">
                     View All
                     <ArrowUpRight className="ml-2 w-4 h-4" />
                   </Button>
@@ -170,14 +157,9 @@ const Index = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                  whileHover={{ 
-                    y: -10,
-                    rotate: index % 2 === 0 ? 1 : -1,
-                    transition: { duration: 0.2 }
-                  }}
                 >
                   <Link to={`/project/${project.id}`}>
-                    <Card className="hover:shadow-thick transition-all duration-300 cursor-pointer border-4 border-accent overflow-hidden group">
+                    <Card className="neumo-elevated overflow-hidden group">
                       <div className="overflow-hidden">
                         <img
                           src={project.image}
@@ -188,7 +170,7 @@ const Index = () => {
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between mb-3">
                           <h3 className="text-xl font-bold">{project.title}</h3>
-                          <Badge variant="secondary" className="ml-2 border-2 border-accent">{project.tool}</Badge>
+                          <Badge variant="secondary" className="neumo-elevated">{project.tool}</Badge>
                         </div>
                         <p className="text-muted-foreground mb-4">{project.description}</p>
                         <div className="flex items-center justify-between">
@@ -210,15 +192,13 @@ const Index = () => {
         </section>
 
         {/* CTA Section */}
-        <section ref={ctaRef} className="py-20 bg-cover bg-center bg-no-repeat relative overflow-hidden" style={{ backgroundImage: 'url(/retro-waves-bg.jpg)' }}>
-          <div className="absolute inset-0 bg-accent/50"></div>
-          
-          <div className="container mx-auto px-4 text-center relative z-10">
+        <section ref={ctaRef} className="py-20">
+          <div className="container mx-auto px-4 text-center">
             <motion.h2 
               initial={{ opacity: 0, scale: 0.8 }}
               animate={ctaInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.6, type: "spring", stiffness: 150 }}
-              className="text-white mb-4 retro-text-shadow"
+              className="mb-4"
             >
               Ready to Test Your AI?
             </motion.h2>
@@ -226,7 +206,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={ctaInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-white/90 text-xl mb-8 max-w-2xl mx-auto"
+              className="text-muted-foreground text-xl mb-8 max-w-2xl mx-auto"
             >
               Join hundreds of students testing, building, and learning with AI tools
             </motion.p>
@@ -237,27 +217,14 @@ const Index = () => {
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
               <Link to="/submit">
-                <motion.div
-                  whileHover={{ scale: 1.05, rotate: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button variant="secondary" size="lg" className="text-lg px-8 border-4 border-accent shadow-thick hover:shadow-thick-hover transition-all">
-                    Submit Your Tool
-                  </Button>
-                </motion.div>
+                <Button size="lg" className="neumo-cta-primary text-lg px-8">
+                  Submit Your Tool
+                </Button>
               </Link>
               <Link to="/login">
-                <motion.div
-                  whileHover={{ scale: 1.05, rotate: 2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button 
-                    size="lg" 
-                    className="text-lg px-8 bg-white/20 hover:bg-white/30 text-white border-4 border-white backdrop-blur-sm shadow-thick hover:shadow-thick-hover transition-all"
-                  >
-                    Start Testing
-                  </Button>
-                </motion.div>
+                <Button size="lg" className="neumo-cta-secondary text-lg px-8">
+                  Start Testing
+                </Button>
               </Link>
             </motion.div>
           </div>
