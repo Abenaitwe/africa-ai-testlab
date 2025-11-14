@@ -171,7 +171,7 @@ const Submit = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background-off-white">
       <div className="relative z-10">
         <Navigation />
         

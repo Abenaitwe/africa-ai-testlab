@@ -68,7 +68,7 @@ export const HowItWorks = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="mb-4 heading-gradient">How It Works</h2>
+          <h2 className="mb-4">How It <span className="text-primary">Works</span></h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             A simple, transparent process that connects AI builders with real testers
           </p>

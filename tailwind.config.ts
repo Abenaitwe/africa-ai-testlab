@@ -14,15 +14,18 @@ export default {
     },
     extend: {
       fontFamily: {
+        primary: ['Orbitron', 'sans-serif'],
+        secondary: ['Space Grotesk', 'sans-serif'],
         sans: ['Inter', 'sans-serif'],
-        display: ['Bebas Neue', 'cursive'],
-        heading: ['Playfair Display', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          "off-white": "hsl(var(--background-off-white))",
+        },
         foreground: "hsl(var(--foreground))",
         canvas: "hsl(var(--canvas))",
         primary: {

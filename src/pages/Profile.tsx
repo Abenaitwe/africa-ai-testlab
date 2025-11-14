@@ -67,7 +67,7 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-background-off-white flex items-center justify-center">
         <div className="text-center bg-card/95 backdrop-blur-sm p-8 rounded-lg border-4 border-accent shadow-thick">
           <p className="text-xl">Loading profile...</p>
         </div>
@@ -77,7 +77,7 @@ const Profile = () => {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-background-off-white flex items-center justify-center">
         <div className="text-center bg-card/95 backdrop-blur-sm p-8 rounded-lg border-4 border-accent shadow-thick">
           <h1 className="text-4xl font-bold mb-4">Profile Not Found</h1>
           <p className="mb-6">This user doesn't exist.</p>
@@ -90,7 +90,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background-off-white">
       <div className="relative z-10">
         <Navigation />
         

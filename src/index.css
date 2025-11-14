@@ -6,6 +6,7 @@
   :root {
     /* Ethereal Neumorphism Palette */
     --background: 180 14% 30%; /* #445f5f */
+    --background-off-white: 40 10% 95%; /* #F2F0EF */
     --foreground: 210 5% 95%;
 
     /* Core Neumorphism Colors */
@@ -74,21 +75,16 @@
   }
 
   body {
-    @apply bg-canvas text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    @apply bg-canvas text-foreground antialiased font-sans;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-foreground;
+    @apply font-bold text-foreground font-primary;
   }
   
   h1 { @apply text-5xl md:text-6xl; }
   h2 { @apply text-4xl; }
   h3 { @apply text-2xl; }
-
-  .heading-gradient {
-    @apply bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent;
-  }
 }
 
 @layer components {
