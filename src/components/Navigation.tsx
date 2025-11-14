@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X, User as UserIcon, LogOut } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -13,10 +14,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+interface Profile {
+  id: string;
+  username: string;
+  avatar_url: string;
+  full_name: string;
+}
+
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [profile, setProfile] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,7 +84,7 @@ export const Navigation = () => {
             Leaderboard
           </Link>
           <Link to="/submit">
-            <Button className="neumo-cta-secondary" size="sm">Submit Project</Button>
+            <Button className="neumo-cta-secondary text-white" size="sm">Submit Project</Button>
           </Link>
           {user ? (
             <DropdownMenu>
@@ -110,7 +118,7 @@ export const Navigation = () => {
             </DropdownMenu>
           ) : (
             <Link to="/login">
-              <Button className="neumo-cta-secondary" size="sm">Login</Button>
+              <Button className="neumo-cta-secondary text-white" size="sm">Login</Button>
             </Link>
           )}
         </div>

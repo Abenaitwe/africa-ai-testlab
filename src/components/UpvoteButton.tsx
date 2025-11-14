@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,11 +17,7 @@ export const UpvoteButton = ({ projectId, initialUpvotes, size = "md" }: UpvoteB
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    checkIfUpvoted();
-  }, [projectId]);
-
-  const checkIfUpvoted = async () => {
+  const checkIfUpvoted = useCallback(async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) return;
 
@@ -33,7 +29,11 @@ export const UpvoteButton = ({ projectId, initialUpvotes, size = "md" }: UpvoteB
       .single();
 
     setHasUpvoted(!!data);
-  };
+  }, [projectId]);
+
+  useEffect(() => {
+    checkIfUpvoted();
+  }, [checkIfUpvoted]);
 
   const handleUpvote = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -78,10 +78,11 @@ export const UpvoteButton = ({ projectId, initialUpvotes, size = "md" }: UpvoteB
         setHasUpvoted(true);
         setUpvotes(upvotes + 1);
       }
-    } catch (error: any) {
+    } catch (error) {
+      const err = error as Error
       toast({
         title: "Error",
-        description: error.message,
+        description: err.message,
         variant: "destructive",
       });
     } finally {
