@@ -63,7 +63,7 @@ export const Hero = () => {
               </Button>
             </Link>
             <a href="#how-it-works">
-              <Button size="lg" className="neumo-cta-secondary text-lg px-8">
+              <Button size="lg" className="neumo-cta-secondary text-lg px-8 text-white">
                 See How It Works ↓
               </Button>
             </a>
