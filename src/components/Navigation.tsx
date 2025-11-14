@@ -24,14 +24,18 @@ export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [loadingProfile, setLoadingProfile] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoadingProfile(true);
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         loadProfile(session.user.id);
+      } else {
+        setLoadingProfile(false);
       }
     });
 
@@ -44,6 +48,7 @@ export const Navigation = () => {
         loadProfile(session.user.id);
       } else {
         setProfile(null);
+        setLoadingProfile(false);
       }
     });
 
@@ -51,12 +56,20 @@ export const Navigation = () => {
   }, []);
 
   const loadProfile = async (userId: string) => {
-    const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
-    setProfile(data);
+    setLoadingProfile(true);
+    try {
+      const { data } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+      setProfile(data);
+    } catch (error) {
+      console.error("Error loading profile:", error);
+      setProfile(null);
+    } finally {
+      setLoadingProfile(false);
+    }
   };
 
   const handleLogout = async () => {
@@ -86,35 +99,43 @@ export const Navigation = () => {
             <Button className="neumo-cta-secondary text-white" size="sm">Submit Project</Button>
           </Link>
           {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-2 outline-none">
-                <Avatar className="h-8 w-8 border-2 border-accent">
-                  <AvatarImage src={profile?.avatar_url} alt={profile?.username} />
-                  <AvatarFallback>{profile?.username?.substring(0, 2).toUpperCase() || 'U'}</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 neumo-elevated">
-                <div className="flex items-center gap-2 p-2">
-                  <Avatar className="h-10 w-10">
+            loadingProfile ? (
+              <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-2 outline-none">
+                  <Avatar className="h-8 w-8 border-2 border-accent">
                     <AvatarImage src={profile?.avatar_url} alt={profile?.username} />
-                    <AvatarFallback>{profile?.username?.substring(0, 2).toUpperCase() || 'U'}</AvatarFallback>
+                    <AvatarFallback>{profile?.username?.substring(0, 2).toUpperCase() || <UserIcon />}</AvatarFallback>
                   </Avatar>
-                  <div className="flex flex-col">
-                    <p className="text-sm font-medium">{profile?.full_name || profile?.username}</p>
-                    <p className="text-xs text-muted-foreground">@{profile?.username}</p>
-                  </div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate(`/profile/${profile?.username}`)}>
-                  <User className="mr-2 h-4 w-4" />
-                  My Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 neumo-elevated">
+                  {profile && (
+                    <>
+                      <div className="flex items-center gap-2 p-2">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src={profile.avatar_url} alt={profile.username} />
+                          <AvatarFallback>{profile.username.substring(0, 2).toUpperCase() || <UserIcon />}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <p className="text-sm font-medium">{profile.full_name || profile.username}</p>
+                          <p className="text-xs text-muted-foreground">@{profile.username}</p>
+                        </div>
+                      </div>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => navigate(`/profile/${profile.username}`)}>
+                        <UserIcon className="mr-2 h-4 w-4" />
+                        My Profile
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )
           ) : (
             <Link to="/login">
               <Button className="neumo-cta-secondary text-white" size="sm">Login</Button>
@@ -160,18 +181,26 @@ export const Navigation = () => {
               <Button className="neumo-cta-secondary w-full" size="sm">Submit Project</Button>
             </Link>
             {user ? (
-              <>
-                <Link to={`/profile/${profile?.username}`} onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="neumo-cta-secondary w-full" size="sm">
-                    <User className="mr-2 h-4 w-4" />
-                    My Profile
+              loadingProfile ? (
+                <div className="flex justify-center">
+                  <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
+                </div>
+              ) : (
+                <>
+                  {profile && (
+                    <Link to={`/profile/${profile.username}`} onClick={() => setMobileMenuOpen(false)}>
+                      <Button className="neumo-cta-secondary w-full" size="sm">
+                        <UserIcon className="mr-2 h-4 w-4" />
+                        My Profile
+                      </Button>
+                    </Link>
+                  )}
+                  <Button className="neumo-cta-secondary w-full" size="sm" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
                   </Button>
-                </Link>
-                <Button className="neumo-cta-secondary w-full" size="sm" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </Button>
-              </>
+                </>
+              )
             ) : (
               <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
                 <Button className="neumo-cta-secondary w-full" size="sm">Login</Button>
