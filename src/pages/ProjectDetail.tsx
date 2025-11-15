@@ -242,17 +242,17 @@ const ProjectDetail = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             {/* Project Header */}
             <Card className="mb-8 border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
-              <CardContent className="p-8">
-                <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-6">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-4">
-                      <h1 className="text-4xl font-bold">{project.title}</h1>
-                      <Badge variant="secondary" className="text-lg px-4 py-1 border-2 border-accent capitalize">
+              <CardContent className="p-6 md:p-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                  <div className="md:col-span-2">
+                    <div className="flex flex-wrap items-center gap-3 mb-4">
+                      <h1 className="text-3xl md:text-4xl font-bold">{project.title}</h1>
+                      <Badge variant="secondary" className="text-md md:text-lg px-4 py-1 border-2 border-accent capitalize">
                         {project.ai_tool}
                       </Badge>
                     </div>
                     
-                    <div className="flex items-center gap-4 mb-4">
+                    <div className="flex flex-wrap items-center gap-4 mb-4">
                       <Link to={`/profile/${project.profiles?.username}`}>
                         <div className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                           <Avatar className="w-10 h-10 border-2 border-accent">
@@ -321,6 +321,12 @@ const ProjectDetail = () => {
 
                     {isOwner && (
                       <div className="flex gap-2 pt-4 border-t border-border">
+                        <Link to={`/submit/${project.id}`}>
+                          <Button variant="outline" size="sm" className="border-2 border-accent">
+                            <Edit className="w-4 h-4 mr-2" />
+                            Edit
+                          </Button>
+                        </Link>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button variant="destructive" size="sm" className="border-2 border-accent">
@@ -394,13 +400,13 @@ const ProjectDetail = () => {
                     <img
                       src={project.project_images[selectedImage]?.image_url}
                       alt={`Screenshot ${selectedImage + 1}`}
-                      className="w-full h-[500px] object-contain bg-muted/50 border-4 border-accent rounded-lg"
+                      className="w-full h-[300px] md:h-[500px] object-contain bg-muted/50 border-4 border-accent rounded-lg"
                     />
                   </div>
 
                   {/* Thumbnail Grid */}
                   {project.project_images.length > 1 && (
-                    <div className="grid grid-cols-5 gap-3">
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
                       {project.project_images.map((img: any, index: number) => (
                         <motion.button
                           key={img.id}
