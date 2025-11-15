@@ -117,13 +117,13 @@ const Leaderboard = () => {
 
             <TabsContent value="tools">
               <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
-                <CardHeader className="p-8">
+                <CardHeader className="p-4 md:p-8">
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="w-6 h-6 text-primary" />
                     Top AI Builder Tools
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4 p-8 pt-0">
+                <CardContent className="space-y-4 p-4 md:p-8 pt-0">
                   {loading ? (
                     <div className="text-center py-12">
                       <p className="text-muted-foreground">Loading rankings...</p>
@@ -136,21 +136,21 @@ const Leaderboard = () => {
                     topTools.map((tool, index) => (
                       <div
                         key={tool.name}
-                        className="flex items-center gap-4 p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1"
+                        className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 sm:p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1"
                       >
-                        <div className={`text-4xl font-bold ${getTrophyColor(index)}`}>
+                        <div className={`text-3xl sm:text-4xl font-bold ${getTrophyColor(index)}`}>
                           #{index + 1}
                         </div>
                         <div className="flex-1">
                           <h3 className="font-bold text-lg capitalize">{tool.name}</h3>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
                             <div className="flex items-center gap-1">
                               <Award className="w-4 h-4 text-primary" />
                               <span className="font-semibold">{tool.totalUpvotes}</span>
                               <span>upvotes</span>
                             </div>
                             <span>{tool.projects} projects</span>
-                            <span>{Math.round(tool.avgUpvotes)} avg upvotes/project</span>
+                            <span className="hidden sm:inline">{Math.round(tool.avgUpvotes)} avg upvotes/project</span>
                           </div>
                         </div>
                       </div>
@@ -168,13 +168,13 @@ const Leaderboard = () => {
 
             <TabsContent value="testers">
               <Card className="border-4 border-accent shadow-thick bg-card/95 backdrop-blur-sm">
-                <CardHeader className="p-8">
+                <CardHeader className="p-4 md:p-8">
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="w-6 h-6 text-primary" />
                     Top Testers
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4 p-8 pt-0">
+                <CardContent className="space-y-4 p-4 md:p-8 pt-0">
                   {loading ? (
                     <div className="text-center py-12">
                       <p className="text-muted-foreground">Loading rankings...</p>
@@ -186,27 +186,31 @@ const Leaderboard = () => {
                   ) : (
                     topTesters.map((tester, index) => (
                       <Link key={tester.username} to={`/profile/${tester.username}`}>
-                        <div className="flex items-center gap-4 p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1 cursor-pointer">
-                          <div className={`text-4xl font-bold ${getTrophyColor(index)}`}>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 sm:p-6 rounded-lg border-3 border-accent bg-card shadow-soft hover:shadow-thick transition-all hover:-translate-y-1 cursor-pointer">
+                          <div className={`text-3xl sm:text-4xl font-bold ${getTrophyColor(index)}`}>
                             #{index + 1}
                           </div>
-                          <Avatar className="w-12 h-12 border-2 border-accent">
-                            <AvatarImage src={tester.avatar_url} alt={tester.full_name} />
-                            <AvatarFallback>
-                              {tester.full_name?.split(' ').map((n: string) => n[0]).join('') || tester.username.substring(0, 2).toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
                           <div className="flex-1">
-                            <h3 className="font-bold">{tester.full_name || tester.username}</h3>
-                            <p className="text-sm text-muted-foreground">@{tester.username}</p>
+                            <div className="flex items-center gap-3">
+                              <Avatar className="w-12 h-12 border-2 border-accent">
+                                <AvatarImage src={tester.avatar_url} alt={tester.full_name} />
+                                <AvatarFallback>
+                                  {tester.full_name?.split(' ').map((n: string) => n[0]).join('') || tester.username.substring(0, 2).toUpperCase()}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <h3 className="font-bold">{tester.full_name || tester.username}</h3>
+                                <p className="text-sm text-muted-foreground">@{tester.username}</p>
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-right">
-                            <div className="flex items-center gap-1 justify-end mb-1">
+                          <div className="w-full sm:w-auto text-left sm:text-right">
+                            <div className="flex items-center gap-1 justify-start sm:justify-end mb-1">
                               <Award className="w-5 h-5 text-primary" />
                               <span className="font-bold text-lg">{tester.score}</span>
                               <span className="text-sm text-muted-foreground">pts</span>
                             </div>
-                            <div className="text-sm text-muted-foreground">
+                            <div className="text-sm text-muted-foreground whitespace-nowrap">
                               {tester.reviewsCount} reviews · {tester.projectsCount} projects
                             </div>
                           </div>

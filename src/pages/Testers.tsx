@@ -45,7 +45,7 @@ const TestersHero = () => (
           className="mb-8"
         >
           <div className="inline-block bg-background rounded-full px-6 py-3 text-muted-foreground">
-            💵 Avg. $180/month  |  ⏰ Flexible hours  |  🏆 Saturday competitions with cash prizes
+            ⏰ Flexible hours  |  🏆 Saturday competitions with cash prizes
           </div>
         </motion.div>
 

@@ -145,10 +145,10 @@ export const Navigation = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden"
+          className="md:hidden p-2 rounded-md bg-card-muted"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <X /> : <Menu />}
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
