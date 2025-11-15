@@ -75,8 +75,8 @@ const Explore = () => {
           {/* Filters */}
           <Card className="mb-8 border-4 border-accent shadow-thick bg-card p-6">
             <h3 className="text-xl font-bold mb-4 uppercase tracking-wide">Filter Projects</h3>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="md:col-span-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="sm:col-span-2 md:col-span-3">
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                   <Input
@@ -94,11 +94,27 @@ const Explore = () => {
                   <SelectTrigger className="h-12 border-3 border-accent">
                     <SelectValue placeholder="Filter by tool" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="max-h-[200px] overflow-y-auto">
                     <SelectItem value="all">All Tools</SelectItem>
-                    <SelectItem value="lovable">Lovable</SelectItem>
-                    <SelectItem value="mocha">Mocha Orchids</SelectItem>
-                    <SelectItem value="builder">Builder.ai</SelectItem>
+                    <SelectItem value="floot">Floot</SelectItem>
+                    <SelectItem value="replit">Replit</SelectItem>
+                    <SelectItem value="roo_code">Roo Code</SelectItem>
+                    <SelectItem value="claude_code">Claude Code</SelectItem>
+                    <SelectItem value="rork">Rork</SelectItem>
+                    <SelectItem value="cursor">Cursor</SelectItem>
+                    <SelectItem value="openai_codex">OpenAI Codex</SelectItem>
+                    <SelectItem value="vibecode">Vibecode</SelectItem>
+                    <SelectItem value="softgen">Softgen</SelectItem>
+                    <SelectItem value="clark">Clark</SelectItem>
+                    <SelectItem value="a0_dev">a0.dev</SelectItem>
+                    <SelectItem value="rosebud_ai">Rosebud AI</SelectItem>
+                    <SelectItem value="firebase_studio">Firebase Studio</SelectItem>
+                    <SelectItem value="jules">Jules</SelectItem>
+                    <SelectItem value="bloom">Bloom</SelectItem>
+                    <SelectItem value="cline">Cline</SelectItem>
+                    <SelectItem value="genspark">Genspark</SelectItem>
+                    <SelectItem value="lindy">Lindy</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -117,6 +133,9 @@ const Explore = () => {
                     <SelectItem value="ecommerce">E-commerce</SelectItem>
                     <SelectItem value="transport">Transportation</SelectItem>
                     <SelectItem value="environment">Environment</SelectItem>
+                    <SelectItem value="ai_agent">AI Agent</SelectItem>
+                    <SelectItem value="faith_tech">Faith Tech</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
